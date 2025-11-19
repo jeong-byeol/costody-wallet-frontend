@@ -1,6 +1,5 @@
 // src/components/shared/Toast.tsx
 import { useUiStore } from '@/stores';
-import { useEffect } from 'react';
 import { X, CheckCircle, AlertCircle, Info, AlertTriangle } from 'lucide-react';
 
 export function Toast() {

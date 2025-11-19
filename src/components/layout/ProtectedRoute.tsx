@@ -26,7 +26,7 @@ export function ProtectedRoute({ children }: ProtectedRouteProps) {
   // ✅ Side effects in useEffect, NOT during render
   useEffect(() => {
     if (!accessToken && !userId && !notificationShown.current) {
-      addNotification('error', '로그인이 필요합니다');
+      addNotification({ type: 'error', message: '로그인이 필요합니다' });
       notificationShown.current = true;
     }
 
