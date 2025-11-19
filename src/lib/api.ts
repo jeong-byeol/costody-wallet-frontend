@@ -1,6 +1,8 @@
 import axios, { AxiosError } from 'axios';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+// 프로덕션 환경(Vercel)에서는 /api를 사용하여 프록시를 통해 백엔드 호출
+// 로컬 개발 환경에서는 VITE_API_BASE_URL 환경 변수 사용
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api';
 const API_TIMEOUT = parseInt(import.meta.env.VITE_API_TIMEOUT_MS || '15000');
 
 export const apiClient = axios.create({

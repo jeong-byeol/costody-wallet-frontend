@@ -55,18 +55,17 @@ cd custody-wallet-frontend
 npm install
 ```
 
-3. Configure environment variables:
+3. Configure environment variables (로컬 개발용):
 ```bash
-cp .env.example .env
+# .env.local 파일 생성
+cat > .env.local << EOF
+VITE_API_BASE_URL=http://localhost:3001
+VITE_API_TIMEOUT_MS=15000
+EOF
 ```
 
-Edit `.env` with your values:
-```env
-VITE_API_BASE_URL=http://localhost:3000
-VITE_CHAIN_ID=11155111
-VITE_PUBLIC_RPC_URL=https://sepolia.infura.io/v3/YOUR_KEY
-VITE_OMNIBUS_VAULT=0xYOUR_VAULT_ADDRESS
-```
+**Note**: 로컬 개발 시에는 `.env.local` 파일에 백엔드 URL을 설정합니다.
+프로덕션(Vercel) 배포 시에는 `vercel.json`의 `rewrites`를 사용하여 프록시를 통해 백엔드와 통신합니다.
 
 4. Run development server:
 ```bash
@@ -151,6 +150,31 @@ npm run build
 ```
 
 Output will be in `dist/` directory.
+
+### Vercel 배포 설정
+
+1. **vercel.json 설정**: 백엔드 URL을 `destination`에 설정
+```json
+{
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "http://your-backend-url.com/:path*"
+    }
+  ]
+}
+```
+
+2. **환경 변수 설정 (선택사항)**:
+   - Vercel 대시보드에서 환경 변수를 설정할 수 있습니다
+   - 기본적으로 `/api`를 사용하여 프록시를 통해 백엔드와 통신합니다
+
+3. **배포**:
+```bash
+git push origin main
+```
+
+Vercel이 자동으로 빌드 및 배포를 시작합니다.
 
 ## 🔒 Security Features
 
